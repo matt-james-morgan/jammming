@@ -1,10 +1,26 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Monoton&display=swap');
 
-div{
+html, body, #app, #root>div {
+  height: 100%;
+  width: 100%;
+}
+
+body{
   background-size: cover;
   background-repeat: no-repeat;
   background-image: url(./resources/kevin-mccutcheon-TcSckNRL9J8-unsplash.jpg);
+}
+nav{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+header{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 header h1{
