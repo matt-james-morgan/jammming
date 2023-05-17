@@ -1,19 +1,22 @@
 import React from "react";
-import searchBar from "./SearchBar";
+import '../Components/SearchBarResults.css';
 
 const songs = [
-    {song: "Beast of Burden"},
-    {song: 'Lemon Song'},
-    {song: 'Mannish Boy'}
+    {name: "Beast of Burden"},
+    {name: 'Lemon Song'},
+    {name: 'Mannish Boy'}
 ];
 
 
 function SearchBarResults(props){
-    return(
-        <ul>
-            {}
-        </ul>
-    );
+   let filteredSongs = songs.filter(song => song.name.includes(props.results));
+     return(
+        <div className="SearchResults">
+         { filteredSongs.map(song => <h1 key={song.name}>{song.name}</h1>)} 
+        </div>
+     )
+     
+
 }
 
-export default SearchBarResults
+export default SearchBarResults;
