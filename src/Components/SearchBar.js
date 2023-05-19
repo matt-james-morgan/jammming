@@ -7,11 +7,11 @@ import SearchBarResults from '../Components/SearchBarResults'
 //Searches through list of songs and calls searchbarresults to present them//
 
 
-function SearchBar({onSearch}){
+function SearchBar(props){
 
     function getUserInput(e){
-       
-        setUserInput(e.target.value);
+        
+        props.onSearch(() => e.target.value);
         
     }
     return(

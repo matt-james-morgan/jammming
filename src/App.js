@@ -1,10 +1,12 @@
-import logo from './logo.svg';
+import React, { useState} from 'react';
 import './App.css';
-import SearchBar, from './Components/SearchBar';
+import SearchBar from './Components/SearchBar';
 import SearchBarResults from './Components/SearchBarResults';
-function App() {
-  const [userInput, setUserInput] = useState('');
+import Playlist from './Components/Playlist';
 
+function App() {
+  const [userInput, setUserInput] = useState(() => '');
+  const [playlist, setPlaylist] = useState(() => '');
   return (
     <div className="App">
       <header>
@@ -12,8 +14,12 @@ function App() {
       </header>
       <nav>
         <SearchBar  onSearch={setUserInput}/>
+        
       </nav>
-        <SearchBarResults results={}/>
+     
+       <SearchBarResults results={userInput} add={setPlaylist}/> 
+       {console.log(playlist)};
+       <Playlist />
     </div>
   );
 }
