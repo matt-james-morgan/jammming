@@ -1,6 +1,6 @@
-import React, {useState} from "react";
-import '../Components/SearchBar.css';
-import SearchBarResults from '../Components/SearchBarResults'
+import React from "react";
+import '../SearchBar/SearchBar.css';
+
 
 
 
