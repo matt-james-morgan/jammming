@@ -29,7 +29,7 @@ function App() {
   
 
   return (
-    <div className="App">
+    <div onload={()=>Spotify.onPageLoad()}className="App">
       
       <header>
         <h1 onClick={()=>Spotify.requestAuthorization()}>Jammming</h1>
