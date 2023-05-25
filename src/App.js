@@ -29,16 +29,19 @@ function App() {
   
 
   return (
-    <div onload={()=>Spotify.onPageLoad()}className="App">
+    <div className="App">
       
       <header>
-        <h1 onClick={()=>Spotify.requestAuthorization()}>Jammming</h1>
+        <h1>Jammming</h1>
       </header>
-
+      <section>
+        <p onClick={()=>Spotify.requestAuthorization()}>Login</p>
+        
+      </section>
       <nav>
         <SearchBar  onSearch={setUserInput}/>
       </nav>
-     
+      
        <SearchBarResults results={userInput} onAdd={addTrack} /> 
        <Playlist display={playlist} 
                  onRemove={removeTrack} 

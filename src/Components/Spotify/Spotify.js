@@ -3,37 +3,44 @@ const clientID = 'c2b3a142a4ee44aa8857ab2083965378';
 const clientSecret = '3bafb5ea02074793b5fc73d1beaf5d2c';
 const redirect_uri = 'http://localhost:3000/'
 const AUTHORIZE = 'https://accounts.spotify.com/authorize?';
-const TOKEN = 'https://accounts.spotify.com/api/token';
-
+const TOKENURL = 'https://accounts.spotify.com/api/token';
+let globalToken;
+const searchCode = '/v1/search?q=';
 const Spotify ={
-    onPageLoad(){
-        if(window.location.search.length > 0){
-            this.handleRedirect();
-        }
-    },
-    handleRedirect(){
-        let code = this.getCode();
-        this.fetchAccessToken(code);
-    },
-    fetchAccessToken(code){
-        let body='https://accounts.spotify.com/api/token';
-        body += '&Content-Type: application/x-www-form-urlencoded';
-        body += '&grant_type=client_credentials';
-        body += '&client_id=' + clientID;
-         body+= '&client_secret=' + clientSecret;
-         this.callAuthorizationApi();
+    
+    async fetchAccessToken(){
+        let authParametes = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
             },
-    callAuthorizationApi(){
-
-    },
-    getCode(){
-        let code =null;
-        const queryString = window.location.search;
-        if(queryString.length > 0){
-            const urlParams = new URLSearchParams(queryString);
-            code = urlParams.get('code');
+            body: `grant_type=client_credentials&client_id=${clientID}&client_secret=${clientSecret}`
         }
-        return code;
+      
+        const response = await fetch(TOKENURL, authParametes);
+        const token = await response.json();
+        globalToken = token.access_token;
+        console.log(globalToken);
+      }
+        
+    ,
+    
+    async search(query){
+        console.log(globalToken);
+        let searchParams = {
+            method: 'GET',
+            headers:{
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + globalToken
+            }
+           
+        }
+        console.log('https://api.spotify.com/v1/search?q=' + query + '&type=track', 
+        searchParams);
+        const response = await fetch('https://api.spotify.com/v1/search?q=' + query + '&type=artist', 
+        searchParams);
+        const results = await response.json();
+        console.log(results);
     },
     requestAuthorization(){
         let url = AUTHORIZE;
@@ -42,10 +49,12 @@ const Spotify ={
         url+= '&redirect_uri='+ redirect_uri;
         url += '&show_dialogue=true';
         url += '&scope=playlist-modify-private playlist-modify-public';
-
         window.location.href = url;
     }
     
+    
 }
+
+
 
 export default Spotify;
