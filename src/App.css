@@ -12,7 +12,7 @@ body{
   background-image: url(./resources/kevin-mccutcheon-TcSckNRL9J8-unsplash.jpg);
 }
 nav{
-  display: flex;
+  display: none;/*flex*/
   width: 50%;
   justify-content: center;
 }
@@ -55,3 +55,7 @@ p:hover{
   box-shadow: 0 0 20px rgba(19, 19, 24, 0.6);
   background-color: rgb(232, 228, 250);
 }
+#search{
+  display:block;
+}
+

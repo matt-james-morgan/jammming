@@ -1,6 +1,6 @@
 .searchBarDiv{
     width: 100%;
-    display: block;
+    display: block; /*block*/
 }
 
 input{

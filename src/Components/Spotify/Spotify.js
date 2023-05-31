@@ -1,13 +1,13 @@
 const baseURL = 'https://api.spotify.com'
 const clientID = 'c2b3a142a4ee44aa8857ab2083965378';
 const clientSecret = '3bafb5ea02074793b5fc73d1beaf5d2c';
-const redirect_uri = 'http://localhost:3000/'
+const redirect_uri = 'http://localhost:3000/callback'
 const AUTHORIZE = 'https://accounts.spotify.com/authorize?';
 const TOKENURL = 'https://accounts.spotify.com/api/token';
 let globalToken;
 const searchCode = '/v1/search?q=';
+
 const Spotify ={
-    
     async fetchAccessToken(){
         let authParametes = {
             method: "POST",
@@ -26,7 +26,6 @@ const Spotify ={
     ,
     
     async search(query){
-        console.log(globalToken);
         let searchParams = {
             method: 'GET',
             headers:{
@@ -37,7 +36,7 @@ const Spotify ={
         }
         console.log('https://api.spotify.com/v1/search?q=' + query + '&type=track', 
         searchParams);
-        const response = await fetch('https://api.spotify.com/v1/search?q=' + query + '&type=artist', 
+        const response = await fetch('https://api.spotify.com/v1/search?q=' + query + '&type=track%20artist', 
         searchParams);
         const results = await response.json();
         console.log(results);
@@ -50,9 +49,10 @@ const Spotify ={
         url += '&show_dialogue=true';
         url += '&scope=playlist-modify-private playlist-modify-public';
         window.location.href = url;
+        console.log(url);
     }
     
-    
+   
 }
 
 
