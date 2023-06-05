@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useState, useEffect} from 'react';
 import './App.css';
 import SearchBar from './Components/SearchBar/SearchBar';
 import SearchBarResults from './Components/SearchBarResults/SearchBarResults';
@@ -15,57 +15,60 @@ function App() {
   const [userInput, setUserInput] = useState(() => '');
   const [playlist, setPlaylist] = useState([]);
   const [playlistName, setPlaylistName] = useState('New Playlist');
-  const [isLoggedIn, setIsLoggedIn] = useState(()=>{
-    return false;
-  });
+  const [isLoggedIn, setIsLoggedIn] = useState(()=>false);
+
+  //I need to understand useEffect better and localstorage, islogged in is resetting in value everytime
+  useEffect(()=>{
+    window.localStorage.setItem("LOGGED_IN", isLoggedIn);
+  }, [isLoggedIn]
+  );
 
   function addTrack(track){
     setPlaylist(playlist => ([...playlist, track]));
   }
 
   function removeTrack(trackToRemove){
-    
     setPlaylist(playlist.filter(song => song !== trackToRemove));
-    
   }
 
   function updatePlaylistName(name){
       setPlaylistName(name);
       
   }
+function display(){
+  document.getElementById('nav').style.display = 'flex';
+  document.getElementById('search').style.display = 'block';
+}
+function hideDisplay(){
+  document.getElementById('nav').style.display = 'none';
+  document.getElementById('search').style.display = 'none';
+}
 
-  function loadPage(){
-    
-       return document.getElementById('header').style.display = 'none';
-    
-  }
-  function handleLogin(){
-    let url = AUTHORIZE;
-    url += 'client_id=' + clientID;
-    url += '&response_type=code';
-    url+= '&redirect_uri='+ redirect_uri;
-    url += '&show_dialogue=true';
-    url += '&scope=playlist-modify-private%20playlist-modify-public';
-    console.log(url);
-     window.location.replace(url);
-     
-  }
+//trying to figure how to toggle display
+function toggleDisplay(isLoggedIn){
+  window.localStorage.getItem("LOGGED_IN") ?  
+  display() : hideDisplay();
+  console.log(isLoggedIn);
+}
+ 
+ 
 
   
 
   return (
-    <div className="App">
+    <div  className="App">
       
       <header id='header'>
         <h1>Jammming</h1>
       </header>
 
       <section id="section">
-        <p onClick={handleLogin}>Login</p>
+        <p onClick={()=>Spotify.requestAuthorization(setIsLoggedIn)}>Login</p>
         <p onClick={()=>Spotify.fetchAccessToken()}>Get Token</p>
+        
       </section>
-
-      <nav id='nav'>
+      
+      <nav id='nav' onLoad={toggleDisplay}>
         <SearchBar  onChange={()=>Spotify.search("Mannish Boy")}/>
       </nav>
 

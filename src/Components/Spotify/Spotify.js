@@ -41,7 +41,8 @@ const Spotify ={
         const results = await response.json();
         console.log(results);
     },
-    requestAuthorization(){
+    requestAuthorization(setIsLoggedIn){
+        setIsLoggedIn(true);
         let url = AUTHORIZE;
         url += 'client_id=' + clientID;
         url += '&response_type=code';
@@ -49,7 +50,7 @@ const Spotify ={
         url += '&show_dialogue=true';
         url += '&scope=playlist-modify-private playlist-modify-public';
         window.location.href = url;
-        console.log(url);
+        
     }
     
    
