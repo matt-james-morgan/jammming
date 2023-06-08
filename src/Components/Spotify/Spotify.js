@@ -25,7 +25,8 @@ const Spotify ={
         
     ,
     
-    async search(query){
+    async search(e){
+        const query = e.target.value;
         let searchParams = {
             method: 'GET',
             headers:{
@@ -34,14 +35,14 @@ const Spotify ={
             }
            
         }
-        console.log('https://api.spotify.com/v1/search?q=' + query + '&type=track', 
-        searchParams);
-        const response = await fetch('https://api.spotify.com/v1/search?q=' + query + '&type=track%20artist', 
+        const response = await fetch('https://api.spotify.com/v1/search?q=' + query + '&type=track,album,artist', 
         searchParams);
         const results = await response.json();
-        console.log(results);
+        return results;
     },
+    
     requestAuthorization(setIsLoggedIn){
+        
         setIsLoggedIn(true);
         let url = AUTHORIZE;
         url += 'client_id=' + clientID;

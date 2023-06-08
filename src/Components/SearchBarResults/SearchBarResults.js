@@ -1,5 +1,6 @@
-import React from "react";
+import React, {useState} from "react";
 import '../SearchBarResults/SearchBarResults.css';
+import Spotify from "../Spotify/Spotify";
 
 const songs = [
     {name: "Beast of Burden"},
@@ -9,8 +10,11 @@ const songs = [
 
 
 function SearchBarResults(props){
+
+   
    
    let filteredSongs = songs.filter(song => song.name.includes(props.results));
+
      return(
         <div className="SearchResults">
          {filteredSongs.map(song => <h1 key={song.name}>{song.name}<button onClick={()=>props.onAdd(song.name)}>Add</button>
