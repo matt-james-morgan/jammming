@@ -11,7 +11,8 @@ function App() {
   
   const [playlist, setPlaylist] = useState([]);
   const [playlistName, setPlaylistName] = useState('New Playlist');
-  const [isLoggedIn, setIsLoggedIn] = useState(()=>false);
+  let data =  window.localStorage.getItem('LOGGED_IN');
+  const [isLoggedIn, setIsLoggedIn] = useState(JSON.parse(data));
   const [searchResults, setSearchResults] = useState();
   const [query, setQuery] = useState();
   function display(){
@@ -27,25 +28,20 @@ function App() {
   }
 
   //I need to understand useEffect better and localstorage, islogged in is resetting in value everytime
-  useEffect(() => {
-    const data = window.localStorage.getItem('LOGGED_IN');
-    if(data !== null){
-      console.log("#1" + isLoggedIn);
-      console.log(data + " checkin if the inital thing isa happenoing");
-      setIsLoggedIn(Boolean(data));
-      console.log("#2" + isLoggedIn);
-    }
-  }, []);
+  
 
   useEffect(()=>{
     console.log(isLoggedIn +" this should never be true until i hit true");
-    window.localStorage.setItem("LOGGED_IN", JSON.stringify(isLoggedIn));
+    window.localStorage.setItem("LOGGED_IN", isLoggedIn);
   }, [isLoggedIn]
   );
 
+  console.log(typeof isLoggedIn);
+
   useEffect(()=>{
-    if(isLoggedIn === true){
-      console.log('shorty i should not be running');
+    if(isLoggedIn === "undefined"){
+      setIsLoggedIn(false);
+    }else if(isLoggedIn === true){
       display();
     }else{
       hideDisplay();
@@ -87,9 +83,11 @@ function App() {
       </header>
 
       <section id="section">
+        <p onClick={()=>setIsLoggedIn(true)}>True</p>
         <p onClick={()=>Spotify.requestAuthorization(setIsLoggedIn)}>Login</p>
         <p onClick={()=>Spotify.fetchAccessToken()}>Get Token</p>
         <p onClick={()=>setIsLoggedIn(false)}>false</p>
+        <h1>{console.log("this is happening after it is set" + typeof isLoggedIn)}</h1>
       </section>
       
       <nav id='nav'>
@@ -98,7 +96,7 @@ function App() {
      
    
       <div id='search'>
-       <SearchBarResults results={handleSearch(query)} onAdd={addTrack} /> 
+       <SearchBarResults results={()=>handleSearch(query)} onAdd={addTrack} /> 
        <Playlist display={playlist} 
                  onRemove={removeTrack} 
                  playlistName ={playlistName}

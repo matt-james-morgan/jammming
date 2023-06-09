@@ -25,8 +25,7 @@ const Spotify ={
         
     ,
     
-    async search(e){
-        const query = e.target.value;
+    async search(query){
         let searchParams = {
             method: 'GET',
             headers:{

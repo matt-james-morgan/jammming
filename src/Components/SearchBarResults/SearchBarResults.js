@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React  from "react";
 import '../SearchBarResults/SearchBarResults.css';
 import Spotify from "../Spotify/Spotify";
 
@@ -10,8 +10,6 @@ const songs = [
 
 
 function SearchBarResults(props){
-
-   
    
    let filteredSongs = songs.filter(song => song.name.includes(props.results));
 
