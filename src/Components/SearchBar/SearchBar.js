@@ -7,14 +7,16 @@ import Spotify from "../Spotify/Spotify";
 //Searches through list of songs and calls searchbarresults to present them//
 
 
-function SearchBar(){
+function SearchBar(props){
   
-    
+    const handleInput = (e) =>{
+        props.input(e.target.value);
+    }
 
     return(
         <div>
         <div className="searchBarDiv">
-        <input id='searchBar' type='text'
+        <input onChange={handleInput} id='searchBar' type='text'
         placeholder='Search Artist/Album/Song'
         />
          </div>

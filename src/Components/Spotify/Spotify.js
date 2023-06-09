@@ -34,6 +34,7 @@ const Spotify ={
             }
            
         }
+        console.log(query);
         const response = await fetch('https://api.spotify.com/v1/search?q=' + query + '&type=track,album,artist', 
         searchParams);
         const results = await response.json();

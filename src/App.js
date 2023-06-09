@@ -15,6 +15,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(JSON.parse(data));
   const [searchResults, setSearchResults] = useState();
   const [query, setQuery] = useState();
+
   function display(){
     console.log("i also ran motherfucker");
     document.getElementById('nav').style.display = 'flex';
@@ -36,7 +37,6 @@ function App() {
   }, [isLoggedIn]
   );
 
-  console.log(typeof isLoggedIn);
 
   useEffect(()=>{
     if(isLoggedIn === "undefined"){
@@ -47,6 +47,8 @@ function App() {
       hideDisplay();
     }
   }, [isLoggedIn]);
+
+ 
 
   function addTrack(track){
     setPlaylist(playlist => ([...playlist, track]));
@@ -63,16 +65,18 @@ function App() {
     //trying to figure how to pass data around and i'm trying to get the songs i get to display with the add button
     async function handleSearch(query){
         const results = await Spotify.search(query);
-        
-        setSearchResults(results);
-        if(!searchResults.error && results != null){
-            console.log('im fuckin running bitch')
-            console.log(searchResults);
-            return searchResults;
+        console.log(query);
+        if(results != null){
+          console.log(results);
+          setSearchResults(results);
+
         }
         
     };
   
+    useEffect(()=>{
+      console.log(query);
+    },[query]);
   
   
   return (
@@ -87,16 +91,16 @@ function App() {
         <p onClick={()=>Spotify.requestAuthorization(setIsLoggedIn)}>Login</p>
         <p onClick={()=>Spotify.fetchAccessToken()}>Get Token</p>
         <p onClick={()=>setIsLoggedIn(false)}>false</p>
-        <h1>{console.log("this is happening after it is set" + typeof isLoggedIn)}</h1>
       </section>
       
       <nav id='nav'>
-        <SearchBar  onChange={(e)=>setQuery(e.target.value)}/>
+        <SearchBar  input={setQuery}/>
+        <button onClick={()=>handleSearch(query)}>Serach</button>
       </nav>
      
    
       <div id='search'>
-       <SearchBarResults results={()=>handleSearch(query)} onAdd={addTrack} /> 
+       <SearchBarResults results={searchResults} onAdd={addTrack} /> 
        <Playlist display={playlist} 
                  onRemove={removeTrack} 
                  playlistName ={playlistName}
