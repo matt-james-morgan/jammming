@@ -90,7 +90,7 @@ function App() {
         <p onClick={()=>setIsLoggedIn(true)}>True</p>
         <p onClick={()=>Spotify.requestAuthorization(setIsLoggedIn)}>Login</p>
         <p onClick={()=>Spotify.fetchAccessToken()}>Get Token</p>
-        <p onClick={()=>setIsLoggedIn(false)}>false</p>
+        <p onClick={()=>Spotify.getUserId()}>get user id</p>
       </section>
       
       <nav id='nav'>
