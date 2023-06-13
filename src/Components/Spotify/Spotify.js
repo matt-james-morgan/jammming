@@ -1,32 +1,35 @@
 const baseURL = 'https://api.spotify.com'
 const clientID = 'c2b3a142a4ee44aa8857ab2083965378';
 const clientSecret = '3bafb5ea02074793b5fc73d1beaf5d2c';
-const redirect_uri = 'http://localhost:3000/callback'
+const redirect_uri = 'http://localhost:3000/callback';
 const AUTHORIZE = 'https://accounts.spotify.com/authorize?';
 const TOKENURL = 'https://accounts.spotify.com/api/token';
 let globalToken;
 const searchCode = '/v1/search?q=';
 let userID;
 
+
 const Spotify ={
     async fetchAccessToken(){
-        let authParametes = {
+
+        let authParams = {
             method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
+            form: {
+                'code' :
             },
-            body: `grant_type=client_credentials&client_id=${clientID}&client_secret=${clientSecret}`
+            headers: {
+                'Authorization': 'Basic ' + (clientID + ':' + clientSecret)
+            },
+           
         }
-      
-        const response = await fetch(TOKENURL, authParametes);
+        
+        const response = await fetch(TOKENURL, authParams);
         const token = await response.json();
         globalToken = token.access_token;
         console.log(globalToken);
       }
-        
     ,
     async getUserId(){
-        
         let searchParams = {
             method: 'GET',
             headers:{
@@ -34,27 +37,24 @@ const Spotify ={
             }
            
         }
+        try {
+            const response = await fetch('https://api.spotify.com/v1/me', searchParams);
+            if (response.status === 401) {
+              throw new Error('Unauthorized');
+            }
+            const userData = await response.json();
+            userID = userData.id;
+            console.log('User ID:', userID);
+          } catch (error) {
+            console.error('Error:', error);
+          }
+       /* console.log('https://api.spotify.com/v1/me', searchParams);
         const response = await fetch('https://api.spotify.com/v1/me', searchParams);
         userID = await response.json();
-        console.log(userID);
+        console.log(userID);*/
     },
-     async getUserId2(){
-        console.log('hey mf');
-        fetch('https://api.spotify.com/v1/me', {
-        headers: {
-          'Authorization': 'Bearer ' + globalToken
-        }
-      })
-      .then(response => response.json())
-      .then(data => {
-        const userId = data.id;
-        
-        console.log('User ID:', userId);
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });},
-      
+
+    
     
     async userPlaylist(query){
         let searchParams = {
@@ -96,12 +96,13 @@ const Spotify ={
         url += '&response_type=code';
         url+= '&redirect_uri='+ redirect_uri;
         url += '&show_dialogue=true';
-        url += '&scope=playlist-modify-private playlist-modify-public playlist-read-private playlist-read-collaborative user-read-private user-read-email';
+        url += '&scope=user-read-private user-read-email';
         window.location.href = url;
+        
         
     }
     
-   
+
 }
 
 

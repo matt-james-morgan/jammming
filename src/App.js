@@ -8,7 +8,7 @@ import Spotify from './Components/Spotify/Spotify';
 
 
 function App() {
-  
+  const redirect_uri = 'http://localhost:3000/callback';
   const [playlist, setPlaylist] = useState([]);
   const [playlistName, setPlaylistName] = useState('New Playlist');
   let data =  window.localStorage.getItem('LOGGED_IN');
@@ -78,7 +78,21 @@ function App() {
       console.log(query);
     },[query]);
   
-  
+    function getCode(){
+      let code = null;
+      const queryString = window.location.search;
+      if ( queryString.length > 0 ){
+          const urlParams = new URLSearchParams(queryString);
+          code = urlParams.get('code');
+      }
+      return code;
+  }
+  function handleRedirect(){
+      let code= getCode();
+      Spotify.fetchAccessToken(code);
+      window.history.pushState("", "", redirect_uri);
+  }
+
   return (
     <div  className="App">
       
@@ -89,7 +103,7 @@ function App() {
       <section id="section">
         <p onClick={()=>setIsLoggedIn(true)}>True</p>
         <p onClick={()=>Spotify.requestAuthorization(setIsLoggedIn)}>Login</p>
-        <p onClick={()=>Spotify.fetchAccessToken()}>Get Token</p>
+        <p onClick={()=>handleRedirect()}>Get Token</p>
         <p onClick={()=>Spotify.getUserId()}>get user id</p>
       </section>
       
