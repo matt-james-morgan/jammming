@@ -9,24 +9,25 @@ const searchCode = '/v1/search?q=';
 let userID;
 
 
-const Spotify ={
-    async fetchAccessToken(){
+const Spotify = {
+    async fetchAccessToken(code){
+        let tokenParams={
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded',
+                  Authorization: 'Basic ' + btoa(clientID + ':' + clientSecret), // Replace with your client ID and secret
+                },
+                body: new URLSearchParams({
+                  code: code,
+                  redirect_uri: redirect_uri, // Replace with your redirect URI
+                  grant_type: 'authorization_code',
+                }).toString(),
+              };
+              const response = await fetch (TOKENURL, tokenParams);
+              const results = await response.json();
+              globalToken = results.access_token;
+              console.log(globalToken);
 
-        let authParams = {
-            method: "POST",
-            form: {
-                'code' :
-            },
-            headers: {
-                'Authorization': 'Basic ' + (clientID + ':' + clientSecret)
-            },
-           
-        }
-        
-        const response = await fetch(TOKENURL, authParams);
-        const token = await response.json();
-        globalToken = token.access_token;
-        console.log(globalToken);
       }
     ,
     async getUserId(){
@@ -69,7 +70,7 @@ const Spotify ={
         const response = await fetch('https://api.spotify.com/v1/search?q=' + query + '&type=track,album,artist', 
         searchParams);
         const results = await response.json();
-        return results;
+        console.log(results);
     },
     
     async search(query){
