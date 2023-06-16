@@ -105,6 +105,7 @@ function App() {
         <p onClick={()=>Spotify.requestAuthorization(setIsLoggedIn)}>Login</p>
         <p onClick={()=>handleRedirect()}>Get Token</p>
         <p onClick={()=>Spotify.getUserId()}>get user id</p>
+        <p onClick={()=>Spotify.userPlaylist()}>get userPlaylist</p>
       </section>
       
       <nav id='nav'>

@@ -57,7 +57,8 @@ const Spotify = {
 
     
     
-    async userPlaylist(query){
+    async userPlaylist(){
+        console.log(userID);
         let searchParams = {
             method: 'GET',
             headers:{
@@ -67,7 +68,7 @@ const Spotify = {
            
         }
         
-        const response = await fetch('https://api.spotify.com/v1/search?q=' + query + '&type=track,album,artist', 
+        const response = await fetch('https://api.spotify.com/v1/users/' + 'guitarmatt47' + 'playlists', 
         searchParams);
         const results = await response.json();
         console.log(results);
