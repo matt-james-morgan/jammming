@@ -17,7 +17,6 @@ function App() {
   const [query, setQuery] = useState();
 
   function display(){
-    console.log("i also ran motherfucker");
     document.getElementById('nav').style.display = 'flex';
     document.getElementById('search').style.display = 'block';
 
@@ -58,9 +57,7 @@ function App() {
     setPlaylist(playlist.filter(song => song !== trackToRemove));
   }
 
-  function updatePlaylistName(name){
-      setPlaylistName(name);
-  }
+  
   
     //trying to figure how to pass data around and i'm trying to get the songs i get to display with the add button
     async function handleSearch(query){
@@ -69,7 +66,6 @@ function App() {
         if(results != null){
           console.log(results);
           setSearchResults(results);
-
         }
         
     };
@@ -101,7 +97,6 @@ function App() {
       </header>
 
       <section id="section">
-        <p onClick={()=>setIsLoggedIn(true)}>True</p>
         <p onClick={()=>Spotify.requestAuthorization(setIsLoggedIn)}>Login</p>
         <p onClick={()=>handleRedirect()}>Get Token</p>
         <p onClick={()=>Spotify.getUserId()}>get user id</p>
@@ -118,10 +113,10 @@ function App() {
        <SearchBarResults results={searchResults} onAdd={addTrack} /> 
        <Playlist display={playlist} 
                  onRemove={removeTrack} 
-                 playlistName ={playlistName}
-                 updateName ={updatePlaylistName}/>
+                 playlistName={playlistName}
+                 setPlaylistName={setPlaylistName}/>
       </div>
-
+      
     </div>
   );
 }

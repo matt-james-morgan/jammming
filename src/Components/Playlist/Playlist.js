@@ -4,7 +4,8 @@ import Tracklist from '../Tracklist/Tracklist';
 
 function Playlist(props){
     function handleChange(e){
-        props.updateName(e.target.value);
+        props.setPlaylistName(e.target.value);
+        
     }
     return(
         <div>

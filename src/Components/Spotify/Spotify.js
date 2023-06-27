@@ -49,30 +49,9 @@ const Spotify = {
           } catch (error) {
             console.error('Error:', error);
           }
-       /* console.log('https://api.spotify.com/v1/me', searchParams);
-        const response = await fetch('https://api.spotify.com/v1/me', searchParams);
-        userID = await response.json();
-        console.log(userID);*/
+       
     },
 
-    
-    
-    async userPlaylist(){
-        console.log(userID);
-        let searchParams = {
-            method: 'GET',
-            headers:{
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + globalToken
-            }
-           
-        }
-        
-        const response = await fetch('https://api.spotify.com/v1/users/' + 'guitarmatt47' + 'playlists', 
-        searchParams);
-        const results = await response.json();
-        console.log(results);
-    },
     
     async search(query){
         let searchParams = {
@@ -89,6 +68,7 @@ const Spotify = {
         const results = await response.json();
         return results;
     },
+
     
     requestAuthorization(setIsLoggedIn){
         
@@ -98,7 +78,7 @@ const Spotify = {
         url += '&response_type=code';
         url+= '&redirect_uri='+ redirect_uri;
         url += '&show_dialogue=true';
-        url += '&scope=user-read-private user-read-email';
+        url += '&scope=user-read-private user-read-email playlist-read-private playlist-read-collaborative';
         window.location.href = url;
         
         
