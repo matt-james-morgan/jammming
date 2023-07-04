@@ -77,7 +77,7 @@ function App() {
   async function handleRedirect(){
         await Spotify.fetchAccessToken();
         setIsLoggedIn(true);
-        window.history.pushState("", "", redirect_uri);
+       
 
   }
 
@@ -90,7 +90,7 @@ function App() {
 
       <section id="section">
   
-       
+        <p onClick={()=>Spotify.refreshAccessToken()}></p>
         <p onClick={()=>handleRedirect()}>Login</p>
         <p onClick={()=>Spotify.getUserId()}>get user id</p>
         <p onClick={()=>Spotify.userPlaylist()}>get userPlaylist</p>

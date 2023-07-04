@@ -5,7 +5,7 @@ const redirect_uri = 'http://localhost:3000/callback';
 const AUTHORIZE = 'https://accounts.spotify.com/authorize?';
 const TOKENURL = 'https://accounts.spotify.com/api/token';
 let globalToken;
-let refreshToken;
+let globalRefreshToken;
 const searchCode = '/v1/search?q=';
 let userID;
 
@@ -19,6 +19,25 @@ const Spotify = {
     }
     return code;
 },
+async refreshAccessToken(){
+  let refreshTokenParams={
+    method: 'POST',
+    headers: {
+      Authorization: 'Basic ' + btoa(clientID + ':' + clientSecret), // Replace with your client ID and secret
+    },
+    body: new URLSearchParams({
+      grant_type: 'refresh_token',
+      refresh_token: localStorage.getItem("refreshToken")
+    }).toString(),
+};
+const code = await fetch(TOKENURL, refreshTokenParams);
+localStorage.setItem('accessToken', code);
+},
+  tokenCheck(response){
+    if(response !== 200){
+      Spotify.refreshAccessToken();
+    }
+  },
 
     async getUserId(){
         let searchParams = {
@@ -70,30 +89,10 @@ const Spotify = {
       window.location.href = url;
     },
 
-    async fetchRefreshToken(code){
-      let refreshTokenParams={
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          Authorization: 'Basic ' + btoa(clientID + ':' + clientSecret), // Replace with your client ID and secret
-        },
-        body: new URLSearchParams({
-          code: code,
-          redirect_uri: redirect_uri, // Replace with your redirect URI
-          grant_type: 'refresh_token',
-        }).toString(),
-    };
-    const response = await fetch (TOKENURL, refreshTokenParams);
-    const results = await response.json();
-
-    console.log(results);
-  },
-
     async fetchAccessToken(){
       Spotify.requestAuthorization();
       const code = Spotify.getCode();
-      
-      Spotify.fetchRefreshToken(code);
+      window.history.pushState("", "", redirect_uri);
         let tokenParams={
           method: 'POST',
           headers: {
@@ -109,7 +108,9 @@ const Spotify = {
         const response = await fetch (TOKENURL, tokenParams);
         const results = await response.json();
         globalToken = results.access_token;
+        globalRefreshToken = results.refresh_token;
         localStorage.setItem('accessToken', globalToken);
+        localStorage.setItem('refreshToken', globalRefreshToken);
         console.log(globalToken);
       }
     
