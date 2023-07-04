@@ -20,18 +20,24 @@ const Spotify = {
     return code;
 },
 async refreshAccessToken(){
-  let refreshTokenParams={
+  let refreshToken = localStorage.getItem('refreshToken');
+  
+  let params={
     method: 'POST',
     headers: {
-      Authorization: 'Basic ' + btoa(clientID + ':' + clientSecret), // Replace with your client ID and secret
+      Authorization: 'Basic ' + btoa(clientID + ':' + clientSecret),
+      'Content-Type':'application/x-www-form-urlencoded' // Replace with your client ID and secret
     },
     body: new URLSearchParams({
       grant_type: 'refresh_token',
-      refresh_token: localStorage.getItem("refreshToken")
+      refresh_token: refreshToken
     }).toString(),
 };
-const code = await fetch(TOKENURL, refreshTokenParams);
-localStorage.setItem('accessToken', code);
+const response = await fetch(TOKENURL , params);
+let code = await response.json();
+console.log(code);
+let newAccessToken = code.access_token;
+localStorage.setItem('accessToken', newAccessToken);
 },
   tokenCheck(response){
     if(response !== 200){
