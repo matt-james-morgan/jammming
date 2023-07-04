@@ -15,6 +15,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(JSON.parse(data));
   const [searchResults, setSearchResults] = useState();
   const [query, setQuery] = useState();
+  
 
   function display(){
     document.getElementById('nav').style.display = 'flex';
@@ -31,7 +32,6 @@ function App() {
   
 
   useEffect(()=>{
-    console.log(isLoggedIn +" this should never be true until i hit true");
     window.localStorage.setItem("LOGGED_IN", isLoggedIn);
   }, [isLoggedIn]
   );
@@ -70,23 +70,15 @@ function App() {
         
     };
   
-    useEffect(()=>{
-      console.log(query);
-    },[query]);
+    
   
-    function getCode(){
-      let code = null;
-      const queryString = window.location.search;
-      if ( queryString.length > 0 ){
-          const urlParams = new URLSearchParams(queryString);
-          code = urlParams.get('code');
-      }
-      return code;
-  }
-  function handleRedirect(){
-      let code= getCode();
-      Spotify.fetchAccessToken(code);
-      window.history.pushState("", "", redirect_uri);
+    
+
+  async function handleRedirect(){
+        await Spotify.fetchAccessToken();
+        setIsLoggedIn(true);
+        window.history.pushState("", "", redirect_uri);
+
   }
 
   return (
@@ -97,8 +89,9 @@ function App() {
       </header>
 
       <section id="section">
-        <p onClick={()=>Spotify.requestAuthorization(setIsLoggedIn)}>Login</p>
-        <p onClick={()=>handleRedirect()}>Get Token</p>
+  
+       
+        <p onClick={()=>handleRedirect()}>Login</p>
         <p onClick={()=>Spotify.getUserId()}>get user id</p>
         <p onClick={()=>Spotify.userPlaylist()}>get userPlaylist</p>
       </section>
@@ -116,7 +109,7 @@ function App() {
                  playlistName={playlistName}
                  setPlaylistName={setPlaylistName}/>
       </div>
-      
+     
     </div>
   );
 }

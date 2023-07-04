@@ -44,12 +44,11 @@ const Spotify = {
 
     
     async search(query){
-      
         let searchParams = {
             method: 'GET',
             headers:{
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + globalToken
+                'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
             }
            
         }
@@ -91,10 +90,10 @@ const Spotify = {
   },
 
     async fetchAccessToken(){
-        Spotify.requestAuthorization();
-        let code = Spotify.getCode();
-        window.history.pushState("", "", redirect_uri);
-        Spotify.fetchRefreshToken(code);
+      Spotify.requestAuthorization();
+      const code = Spotify.getCode();
+      
+      Spotify.fetchRefreshToken(code);
         let tokenParams={
           method: 'POST',
           headers: {
