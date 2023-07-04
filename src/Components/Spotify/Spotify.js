@@ -9,6 +9,8 @@ let globalRefreshToken;
 const searchCode = '/v1/search?q=';
 let userID;
 
+//July 4, next step: catch error when token expires for all api calls
+
 const Spotify = {
   getCode(){
     let code='';
@@ -40,9 +42,7 @@ let newAccessToken = code.access_token;
 localStorage.setItem('accessToken', newAccessToken);
 },
   tokenCheck(response){
-    if(response !== 200){
-      Spotify.refreshAccessToken();
-    }
+    
   },
 
     async getUserId(){
