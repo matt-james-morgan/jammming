@@ -9,7 +9,8 @@ let globalRefreshToken;
 const searchCode = '/v1/search?q=';
 let userID;
 
-//July 4, next step: catch error when token expires for all api calls
+//July 5, next step: catch error when token expires for all api calls
+// reset url on login, window.history.pushstate not working async functions
 
 const Spotify = {
   getCode(){
@@ -19,6 +20,7 @@ const Spotify = {
         const urlParams = new URLSearchParams(queryString);
         code=urlParams.get('code');
     }
+    
     return code;
 },
 async refreshAccessToken(){
@@ -40,6 +42,7 @@ let code = await response.json();
 console.log(code);
 let newAccessToken = code.access_token;
 localStorage.setItem('accessToken', newAccessToken);
+
 },
   tokenCheck(response){
     
@@ -92,13 +95,14 @@ localStorage.setItem('accessToken', newAccessToken);
       url+= '&redirect_uri='+ redirect_uri;
       url += '&show_dialogue=true';
       url += '&scope=user-read-private user-read-email playlist-read-private playlist-read-collaborative';
+      
       window.location.href = url;
     },
 
     async fetchAccessToken(){
       Spotify.requestAuthorization();
       const code = Spotify.getCode();
-      window.history.pushState("", "", redirect_uri);
+      
         let tokenParams={
           method: 'POST',
           headers: {
@@ -117,7 +121,9 @@ localStorage.setItem('accessToken', newAccessToken);
         globalRefreshToken = results.refresh_token;
         localStorage.setItem('accessToken', globalToken);
         localStorage.setItem('refreshToken', globalRefreshToken);
-        console.log(globalToken);
+        
+        
+        
       }
     
 
