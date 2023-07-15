@@ -4,7 +4,8 @@ import './Playlist.css'
 
 function Playlist(props){
     function handleChange(e){
-        props.updateName(e.target.value);
+        props.setPlaylistName(e.target.value);
+        
     }
     return(
         <div class='userPlaylistContainer'>
