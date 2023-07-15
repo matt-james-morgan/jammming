@@ -15,6 +15,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(JSON.parse(data));
   const [searchResults, setSearchResults] = useState();
   const [query, setQuery] = useState();
+  
 
   function display(){
     console.log("i also ran motherfucker");
@@ -69,16 +70,15 @@ function App() {
         if(results != null){
           console.log(results);
           setSearchResults(results);
-
         }
-        
+
     };
   
     useEffect(()=>{
       console.log(query);
     },[query]);
   
-    function getCode(){
+  function getCode(){
       let code = null;
       const queryString = window.location.search;
       if ( queryString.length > 0 ){
@@ -87,12 +87,13 @@ function App() {
       }
       return code;
   }
+
   function handleRedirect(){
       let code= getCode();
       Spotify.fetchAccessToken(code);
       window.history.pushState("", "", redirect_uri);
   }
-
+  
   return (
     <div  className="App">
       
@@ -101,27 +102,30 @@ function App() {
       </header>
 
       <section id="section">
-        <p onClick={()=>setIsLoggedIn(true)}>True</p>
         <p onClick={()=>Spotify.requestAuthorization(setIsLoggedIn)}>Login</p>
         <p onClick={()=>handleRedirect()}>Get Token</p>
         <p onClick={()=>Spotify.getUserId()}>get user id</p>
         <p onClick={()=>Spotify.userPlaylist()}>get userPlaylist</p>
       </section>
       
-      <nav id='nav'>
-        <SearchBar  input={setQuery}/>
-        <button onClick={()=>handleSearch(query)}>Serach</button>
-      </nav>
+      <div class='playlistContainer'>
+        <div class='searchContainer'>
+          <nav id='nav'>
+            <SearchBar input={setQuery}/>
+            <button onClick={()=>handleSearch(query)}>Search</button>
+           </nav>
+          <div id='search'>
+          <SearchBarResults results={searchResults} onAdd={addTrack} /> 
+          </div>
      
-   
-      <div id='search'>
-       <SearchBarResults results={searchResults} onAdd={addTrack} /> 
-       <Playlist display={playlist} 
+         </div>
+         <div class='userPlaylist'>
+           <Playlist display={playlist} 
                  onRemove={removeTrack} 
                  playlistName ={playlistName}
                  updateName ={updatePlaylistName}/>
+          </div>
       </div>
-
     </div>
   );
 }

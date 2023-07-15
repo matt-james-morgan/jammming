@@ -1,13 +1,34 @@
-.searchBarDiv{
-    width: 100%;
-    display: block; /*block*/
+*{
+    box-sizing: border-box;
 }
 
+.searchBarDiv{
+    height: 100%;
+}
 input{
-    width: 100%;
-    height: 36px;
+    height: 100%;
+    width: 300px;
+    transition: all 1s;
+    border: none;
+    
 }
 
 input:focus{
     outline: none;
+    box-shadow: 10px 10px black;
+}
+
+button{
+    height: 40px;
+    width: 80px;
+    transition: all 1s;
+    background-color: beige;
+    color: blueviolet;
+    box-shadow: 2px 2px black;
+    border: none;
+}
+
+button:hover{
+    border-radius: 10%;
+    box-shadow: 10px 10px black;
 }

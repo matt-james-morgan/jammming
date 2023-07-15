@@ -17,7 +17,7 @@ function SearchBarResults(props){
    
      return(
         <div className="SearchResults">
-        <section>
+        
         {filter.map(song =>
         <ul>
          <li key={song.name}>{song.name}</li>
@@ -25,8 +25,8 @@ function SearchBarResults(props){
          <li key={song.artists["0"].name}>{song.artists["0"].name}</li>
          <button onClick={()=>props.onAdd(song.name)}>Add</button>
          </ul>
-)} 
-        </section>
+         )}; 
+        
 
         </div>
      )

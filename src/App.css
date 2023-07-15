@@ -12,9 +12,10 @@ body{
   background-image: url(./resources/kevin-mccutcheon-TcSckNRL9J8-unsplash.jpg);
 }
 nav{
-  display: none;/*flex*/
-  width: 50%;
-  justify-content: center;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 100%;
 }
 header{
   display: flex;
@@ -49,6 +50,20 @@ p{
   padding: 10px 0;
   box-shadow: 0 0 20px rgba(104, 85, 224, 0.2);
   transition: 0.4s;
+}
+
+.playlistContainer{
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 3%;
+}
+.searchContainer{
+  display: block;
+  width: 100%;
+}
+.userPlaylist{
+  display: block;
+  width: 100%;
 }
 p:hover{
   color: black;
