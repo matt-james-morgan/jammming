@@ -1,11 +1,27 @@
 .SearchResults{
     width: 50%;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    margin: 0 auto;
     
 }
-h1{
+.searchResults h1{
     color: white;
 }
-ul button{
+
+.searchResults ul button{
     width: 30px;
     height: 30px;
+}
+li{
+    list-style: none;
+}
+
+
+
+.SearchResults .songInfo{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }

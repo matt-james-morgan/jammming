@@ -61,7 +61,7 @@ p{
   display: block;
   width: 100%;
 }
-.userPlaylist{
+.userPlaylistName{
   display: block;
   width: 100%;
 }
@@ -71,6 +71,11 @@ p:hover{
   background-color: rgb(232, 228, 250);
 }
 #search{
-  display:block;
+  display:flex;
+  flex-wrap: wrap;
+}
+
+.spotifySearch{
+  width: 50%;
 }
 

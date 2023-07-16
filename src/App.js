@@ -20,7 +20,6 @@ function App() {
   function display(){
     document.getElementById('nav').style.display = 'flex';
     document.getElementById('search').style.display = 'block';
-
   }
   function hideDisplay(){
     console.log("I ran hurrayy");
@@ -109,17 +108,23 @@ function App() {
             <SearchBar input={setQuery}/>
             <button onClick={()=>handleSearch(query)}>Search</button>
            </nav>
-          <div id='search'>
-          <SearchBarResults results={searchResults} onAdd={addTrack} /> 
-          </div>
-     
          </div>
-         <div class='userPlaylist'>
+         
+     
+         <div class='userPlaylistName'>
            <Playlist display={playlist} 
                  onRemove={removeTrack} 
                  playlistName ={playlistName}
                  updateName ={setPlaylistName}/>
           </div>
+      </div>
+      <div class='spotifySearch'>
+        <div id='search'>
+          <SearchBarResults results={searchResults} onAdd={addTrack} /> 
+        </div>
+        <div>
+          
+        </div>
       </div>
     </div>
   );
