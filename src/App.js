@@ -70,22 +70,16 @@ function App() {
         
     };
   
-    
+    function replaceUrl(){
+      window.location.replace(redirect_uri);
+    }
   
     
-
    async function handleRedirect(){
         await Spotify.fetchAccessToken();
         setIsLoggedIn(true);
-        window.addEventListener("popstate", (e) => {
-          if(window.location !== redirect_uri){
-            console.log('hey o')
-            window.history.replaceState("","", redirect_uri);
-          }
-        });
-        
-
-  }
+        replaceUrl();
+      }
 
   return (
     <div  className="App">
@@ -95,8 +89,6 @@ function App() {
       </header>
 
       <section id="section">
-  
-        <p onClick={()=>window.history.replaceState('','', redirect_uri)}></p>
         <p onClick={()=>handleRedirect()}>Login</p>
         <p onClick={()=>Spotify.getUserId()}>get user id</p>
         <p onClick={()=>Spotify.userPlaylist()}>get userPlaylist</p>

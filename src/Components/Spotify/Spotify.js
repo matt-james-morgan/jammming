@@ -13,16 +13,37 @@ let userID;
 // reset url on login, window.history.pushstate not working async functions
 
 const Spotify = {
+   async tokenCheck(){
+    try{
+      let tokenParams ={
+        method: "POST",
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+          'Content-Type': 'application/json'
+        },
+      };
+      const response = await fetch(TOKENURL, tokenParams );
+      if(!response.ok){
+        Spotify.refreshAccessToken();
+      }
+    }
+   catch(error){
+    console.log('you done fucked up')
+   }
+  },
+
   getCode(){
     let code='';
     const queryString = window.location.search;
+
     if ( queryString.length > 0 ){
         const urlParams = new URLSearchParams(queryString);
         code=urlParams.get('code');
     }
-    
+
     return code;
 },
+
 async refreshAccessToken(){
   let refreshToken = localStorage.getItem('refreshToken');
   
@@ -37,18 +58,14 @@ async refreshAccessToken(){
       refresh_token: refreshToken
     }).toString(),
 };
+
 const response = await fetch(TOKENURL , params);
 let code = await response.json();
-console.log(code);
 let newAccessToken = code.access_token;
 localStorage.setItem('accessToken', newAccessToken);
 
 },
-  tokenCheck(response){
-    
-  },
-
-    async getUserId(){
+  async getUserId(){
         let searchParams = {
             method: 'GET',
             headers:{
@@ -72,6 +89,7 @@ localStorage.setItem('accessToken', newAccessToken);
 
     
     async search(query){
+      this.tokenCheck();
         let searchParams = {
             method: 'GET',
             headers:{
@@ -84,6 +102,7 @@ localStorage.setItem('accessToken', newAccessToken);
         const response = await fetch('https://api.spotify.com/v1/search?q=' + query + '&type=track,album,artist', 
         searchParams);
         const results = await response.json();
+        
         return results;
     },
 
