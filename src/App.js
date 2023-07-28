@@ -20,7 +20,6 @@ function App() {
   function display(){
     document.getElementById('nav').style.display = 'flex';
     document.getElementById('search').style.display = 'block';
-
   }
   function hideDisplay(){
     console.log("I ran hurrayy");
@@ -67,7 +66,7 @@ function App() {
           console.log(results);
           setSearchResults(results);
         }
-        
+
     };
   
     function replaceUrl(){
@@ -94,20 +93,30 @@ function App() {
         <p onClick={()=>Spotify.userPlaylist()}>get userPlaylist</p>
       </section>
       
-      <nav id='nav'>
-        <SearchBar  input={setQuery}/>
-        <button onClick={()=>handleSearch(query)}>Serach</button>
-      </nav>
+      <div class='playlistContainer'>
+        <div class='searchContainer'>
+          <nav id='nav'>
+            <SearchBar input={setQuery}/>
+            <button onClick={()=>handleSearch(query)}>Search</button>
+           </nav>
+         </div>
+         
      
-   
-      <div id='search'>
-       <SearchBarResults results={searchResults} onAdd={addTrack} /> 
-       <Playlist display={playlist} 
+         <div class='userPlaylistName'>
+           <Playlist display={playlist} 
                  onRemove={removeTrack} 
-                 playlistName={playlistName}
-                 setPlaylistName={setPlaylistName}/>
+                 playlistName ={playlistName}
+                 updateName ={setPlaylistName}/>
+          </div>
       </div>
-     
+      <div class='spotifySearch'>
+        <div id='search'>
+          <SearchBarResults results={searchResults} onAdd={addTrack} /> 
+        </div>
+        <div>
+          
+        </div>
+      </div>
     </div>
   );
 }

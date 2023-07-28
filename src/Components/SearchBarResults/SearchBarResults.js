@@ -9,7 +9,7 @@ function SearchBarResults(props){
    if(props.results){
       let filter=[];
       console.log(props.results.tracks.items.length);
-      for(let i =0; i<props.results.tracks.items.length; i++){
+      for(let i =0; i<10; i++){
          console.log(i);
          filter.push(props.results.tracks.items[i]);
       }
@@ -17,16 +17,19 @@ function SearchBarResults(props){
    
      return(
         <div className="SearchResults">
-        <section>
+        
         {filter.map(song =>
+        <div className='songInfo'>
         <ul>
-         <li key={song.name}>{song.name}</li>
-         <li key={song.album.name}>{song.album.name}</li>
-         <li key={song.artists["0"].name}>{song.artists["0"].name}</li>
-         <button onClick={()=>props.onAdd(song.name)}>Add</button>
+            
+            <li  class ='songName'key={song.name}>{song.name}</li>
+            <li key={song.album.name}>Album: {song.album.name}</li>
+            <li key={song.artists.name}> Artist:{song.artists.name}</li>
          </ul>
-)} 
-        </section>
+         <button onClick={()=>props.onAdd(song.name)}>Add</button>
+         </div>
+         )}; 
+        
 
         </div>
      )

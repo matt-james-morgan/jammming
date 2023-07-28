@@ -14,18 +14,12 @@ function SearchBar(props){
     }
 
     return(
-        <div>
+        
         <div className="searchBarDiv">
         <input onChange={handleInput} id='searchBar' type='text'
         placeholder='Search Artist/Album/Song'
         />
          </div>
-         </div>
-        
-            
-         
-        
-         
          
     )
 }

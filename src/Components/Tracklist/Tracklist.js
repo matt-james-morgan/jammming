@@ -8,7 +8,7 @@ function Tracklist(props){
             <ul>
                 {props.playlistDisplay.map(song => <li key={song}>{song}<button onClick={()=>props.onRemove(song)}>Delete</button></li>)}
             </ul>
-            <button>Save To Spotify</button>
+            
         </div>
     );
    
