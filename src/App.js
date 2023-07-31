@@ -20,11 +20,13 @@ function App() {
   function display(){
     document.getElementById('nav').style.display = 'flex';
     document.getElementById('search').style.display = 'block';
+    document.getElementById('section').style.display = 'none';
   }
+
   function hideDisplay(){
-    console.log("I ran hurrayy");
     document.getElementById('nav').style.display = 'none';
     document.getElementById('search').style.display = 'none';
+    document.getElementById('userPlaylist').style.display = 'none';
   }
 
   //I need to understand useEffect better and localstorage, islogged in is resetting in value everytime
@@ -93,8 +95,8 @@ function App() {
         <p onClick={()=>Spotify.userPlaylist()}>get userPlaylist</p>
       </section>
       
-      <div class='playlistContainer'>
-        <div class='searchContainer'>
+      <div className='playlistContainer'>
+        <div className='searchContainer'>
           <nav id='nav'>
             <SearchBar input={setQuery}/>
             <button onClick={()=>handleSearch(query)}>Search</button>
@@ -102,14 +104,14 @@ function App() {
          </div>
          
      
-         <div class='userPlaylistName'>
+         <div className='userPlaylistName' id='userPlaylist'>
            <Playlist display={playlist} 
                  onRemove={removeTrack} 
                  playlistName ={playlistName}
                  updateName ={setPlaylistName}/>
           </div>
       </div>
-      <div class='spotifySearch'>
+      <div className='spotifySearch'>
         <div id='search'>
           <SearchBarResults results={searchResults} onAdd={addTrack} /> 
         </div>

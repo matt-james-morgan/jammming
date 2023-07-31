@@ -23,7 +23,10 @@ const Spotify = {
         },
       };
       const response = await fetch(TOKENURL, tokenParams );
-      if(!response.ok){
+      if(response.ok){
+        console.log('tokenCheck ran');
+      }
+      else if(!response.ok){
         Spotify.refreshAccessToken();
       }
     }
@@ -107,21 +110,20 @@ localStorage.setItem('accessToken', newAccessToken);
     },
 
     
-      requestAuthorization(){
+     async requestAuthorization(){
        let url = AUTHORIZE;
       url += 'client_id=' + clientID;
       url += '&response_type=code';
       url+= '&redirect_uri='+ redirect_uri;
       url += '&show_dialogue=true';
       url += '&scope=user-read-private user-read-email playlist-read-private playlist-read-collaborative';
-      
       window.location.href = url;
     },
 
     async fetchAccessToken(){
-      Spotify.requestAuthorization();
+      await Spotify.requestAuthorization();
       const code = Spotify.getCode();
-      
+      console.log(code);
         let tokenParams={
           method: 'POST',
           headers: {
@@ -134,15 +136,12 @@ localStorage.setItem('accessToken', newAccessToken);
             grant_type: 'authorization_code',
           }).toString(),
         };
+
         const response = await fetch (TOKENURL, tokenParams);
         const results = await response.json();
-        globalToken = results.access_token;
-        globalRefreshToken = results.refresh_token;
-        localStorage.setItem('accessToken', globalToken);
-        localStorage.setItem('refreshToken', globalRefreshToken);
-        
-        
-        
+        localStorage.setItem('accessToken', results.access_token);
+        localStorage.setItem('refreshToken', results.refresh_token);
+        console.log(results.access_token);
       }
     
 

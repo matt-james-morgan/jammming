@@ -1,5 +1,6 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Monoton&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 html, body, #app, #root>div {
   height: 100%;
@@ -9,7 +10,7 @@ html, body, #app, #root>div {
 body{
   background-size: cover;
   background-repeat: no-repeat;
-  background-image: url(./resources/kevin-mccutcheon-TcSckNRL9J8-unsplash.jpg);
+  background-image: url(./resources/turntable.gif);
 }
 nav{
   display: flex;
@@ -25,7 +26,8 @@ header{
 }
 
 #header h1{
-  font-family: 'Monoton', cursive;
+  /*font-family: 'Monoton', cursive;*/
+  font-family: 'Press Start 2P', cursive;
   display: flex;
   justify-content: center;
   font-size: 5em;

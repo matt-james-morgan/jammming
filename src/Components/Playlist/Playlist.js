@@ -8,7 +8,7 @@ function Playlist(props){
         
     }
     return(
-        <div class='userPlaylistContainer'>
+        <div className='userPlaylistContainer'>
                 <input onChange={handleChange} default='new playlist' placeholder='Playlist Name'/>
                 <button>Save To Spotify</button>
                 <Tracklist playlistDisplay={props.display} onRemove={props.onRemove}/>
